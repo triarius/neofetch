@@ -3361,8 +3361,7 @@ get_term_font() {
 
             [[ -f "${confs[0]}" ]] || return
 
-            term_font="$(awk '/normal:/ {while (!/family:/ || /#/)
-                         {if (!getline) {exit}} print; exit}' "${confs[0]}")"
+            term_font="$(yq -r .font.normal.family "${confs[@]}")"
             term_font="${term_font/*family:}"
             term_font="${term_font/$'\n'*}"
             term_font="${term_font/\#*}"
